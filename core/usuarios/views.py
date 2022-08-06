@@ -2,6 +2,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import Group
 
 from core.usuarios import models
 from core.usuarios import forms
@@ -39,24 +40,36 @@ class UserCreateView(generic.CreateView):
                     user_useradmin = usuario,
                     active_useradmin = True
                 )
+                gpo_admin = Group.objects.get(name='gpo_admin')
+                usuario.groups.add(gpo_admin)
+                
             elif usuario.is_alumno:
                 print('usuario alumno')
                 alumno = models.UserAlumno.objects.create(
                     user_useralumno = usuario,
                     active_useralumno = True
                 )
+                gpo_alumno = Group.objects.get(name='gpo_alumno')
+                usuario.groups.add(gpo_alumno)
+                
             elif usuario.is_profesor:
                 print('usuario profesor')
                 profesor = models.UserProfesor.create(
                     user_userprofesor = usuario,
                     active_userprofesor = True
                 )
+                gpo_profesor = Group.objects.get(name='gpo_profesor')
+                usuario.groups.add(gpo_profesor)
+                
             elif usuario.is_administrativo:
                 print('usuario administrativo')
                 administrativo = models.UserAdministrativo.create(
                     user_useradministrativo = usuario,
                     active_useradministrativo = True
                 )
+                gpo_administrativo = Group.objects.get(name='gpo_administrativo')
+                usuario.groups.add(gpo_administrativo)
+                
             elif usuario.is_apoderado:
                 alumno = form.cleaned_data['alumno']
                 is_sostenedor = form.cleaned_data['is_sostenedor']
@@ -66,18 +79,28 @@ class UserCreateView(generic.CreateView):
                     alumno_userapoderado = alumno,
                     es_sostenedor_userapoderado = is_sostenedor
                 )
+                gpo_apoderado = Group.objects.get(name='gpo_apoderado')
+                usuario.groups.add(gpo_apoderado)
+                
             elif usuario.is_inspector:
                 print('usuario inspector')
                 inspector = models.UserInspector.create(
                     user_userinspector = usuario,
                     active_userinspector = True
                 )
+                gpo_inspector = Group.objects.get(name='gpo_inspector')
+                usuario.groups.add(gpo_inspector)
+                
             elif usuario.is_auditor:
                 print('usuario auditor')
                 auditor = models.UserAuditor.create(
                     user_userauditor = usuario,
                     active_userauditor = True,
                 )
+                gpo_auditor = Group.objects.get(name='gpo_auditor')
+                usuario.groups.add(gpo_auditor)
+                
+            print(usuario.get_all_permissions())
             usuario.save()
             return redirect('usuarios:list')
         else:
