@@ -1,0 +1,45 @@
+{% extends 'core/patron/list.html' %}
+{% load static %}
+
+
+{% block encabezado %}
+<tr>
+    <th>#</th>
+    <th>NOMBRE</th>
+    <th>P. APELLIDO</th>
+    <th>S. APELLIDO</th>
+    <th>RUN</th>
+    <th>EMAIL</th>
+    <th>PERFIL</th>
+    <th>DETALLE</th>
+</tr>
+{% endblock encabezado %}
+    
+
+{% block filas %}
+    {% if object_list %}
+        {% for user in object_list %}
+            <tr>
+                <td class="text-bold-500">{{ forloop.counter }}</td>
+                <td class="text-bold-500">{{ user.first_name }}</td>
+                <td class="text-bold-500">{{ user.last_name }}</td>
+                <td class="text-bold-500">{{ user.apmat_user }}</td>
+                <td class="text-bold-500">{{ user.run_user }}-{{ user.dv_user }}</td>
+                <td class="text-bold-500">{{ user.email }}</td>
+                <td class="text-bold-500">perfil</td> <!-- TODO: validar el perfil -->
+                <td><a href="#" class="btn btn-outline-primary"><i class="bi bi-pencil-square"></i> Editar</a></td>
+            </tr>
+        {% endfor %}
+    {% else %}
+        <tr>
+            <td class="text-bold-500" colspan="6">No se encontraron resultados</td>
+        </tr>
+    {% endif %}
+{% endblock filas %}
+    
+
+{% block table_foot %}
+    <tr>
+        <td colspan="6"><a href="{% url 'usuarios:create' %}" class="btn btn-outline-success"><i class="bi bi-person-plus-fill"></i> Agregar</a></td>
+    </tr>
+{% endblock table_foot %}

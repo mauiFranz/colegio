@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, BaseUserManager, PermissionsMixin
 from django.core.validators import FileExtensionValidator
 
 
@@ -27,7 +27,7 @@ class Provincia(models.Model):
         return self.nombre_provincia
 
     class Meta:
-        ordering = ['nombre_provincia']
+        ordering = ['region_provincia', 'codigo_provincia']
         verbose_name = 'Provincia'
         verbose_name_plural = 'Provincias'
 
@@ -46,17 +46,38 @@ class Comuna(models.Model):
         verbose_name_plural = 'Comunas'
 
 
-class User(AbstractUser):
+class UserManager(BaseUserManager):
+    def _create_user(self,  username, email, password, is_staff, is_superuser, **extra_fields):
+        user = self.model(
+            username = username,
+            email = email,
+            is_staff = is_staff,
+            is_superuser = is_superuser,
+            **extra_fields
+        )
+        user.set_password(password)
+        user.save(using=self.db)
+        return user
+    
+    def create_user(self,  username, email, password=None, **extra_fields):
+        return self._create_user(username, email, password, False, False, **extra_fields)
+    
+    def create_superuser(self,  username, email, password=None, **extra_fields):
+        return self._create_user(username, email, password, True, True, **extra_fields)
+    
+
+class User(AbstractUser, PermissionsMixin):
     """ Clase abstracta que unifica la funcionalidad y atributos de todos los usuarios
         reemplaza al usuario básico de django
     """
-    dv_user = models.CharField(max_length=1)
-    snombre_user = models.CharField(max_length=25, null=True, blank=True)
-    apmat_user = models.CharField(max_length=25)
-    celular_user = models.IntegerField(unique=True)
-    direccion_user = models.CharField(max_length=100)
-    comuna_user = models.ForeignKey(Comuna, on_delete=models.PROTECT)
-    foto = models.ImageField(upload_to='uploads/fotos/', null=True, blank=True, validators=[FileExtensionValidator(['png'])])
+    run_user = models.PositiveIntegerField(unique=True, verbose_name='RUN')
+    dv_user = models.CharField(max_length=1, verbose_name='DV')
+    snombre_user = models.CharField(max_length=25, null=True, blank=True, verbose_name='Segundo Nombre')
+    apmat_user = models.CharField(max_length=25, null=True, blank=True, verbose_name='Apellido Materno')
+    celular_user = models.IntegerField(unique=True, null=True, blank=True, verbose_name='Celular')
+    direccion_user = models.CharField(max_length=100, null=True, blank=True, verbose_name='Dirección')
+    comuna_user = models.ForeignKey(Comuna, on_delete=models.PROTECT, null=True, blank=True, verbose_name='Comuna')
+    foto_user = models.ImageField(upload_to='uploads/fotos/', null=True, blank=True, validators=[FileExtensionValidator(['png'])])
     fecha_nac_user = models.DateField(null=True, blank=True)
     is_admin = models.BooleanField(default=False)
     is_alumno = models.BooleanField(default=False)
@@ -65,6 +86,7 @@ class User(AbstractUser):
     is_apoderado = models.BooleanField(default=False)
     is_inspector = models.BooleanField(default=False)
     is_auditor = models.BooleanField(default=False)
+    objects = UserManager()
     
     def __str__(self):
         return self.first_name + ' ' + self.last_name
@@ -74,6 +96,8 @@ class User(AbstractUser):
         ordering = ['username']
         verbose_name = 'Usuario'
         verbose_name_plural = 'Usuarios'
+    
+    REQUIRED_FIELDS = ['run_user', 'dv_user', 'email']
         
     def get_admin_perfil(self):
         admin_perfil = None
@@ -120,7 +144,7 @@ class User(AbstractUser):
 
 # TODO: detallar atributos particulares de cada tipo de usuario
 class UserAdmin(models.Model):
-    user_useradmin = models.OneToOneField(User, on_delete=models.PROTECT)
+    user_useradmin = models.OneToOneField(User, on_delete=models.CASCADE)
     active_useradmin = models.BooleanField(default=True)
     
     def __str__(self):
@@ -133,7 +157,7 @@ class UserAdmin(models.Model):
         
 
 class UserAlumno(models.Model):
-    user_useralumno = models.OneToOneField(User, on_delete=models.PROTECT)
+    user_useralumno = models.OneToOneField(User, on_delete=models.CASCADE)
     active_useralumno = models.BooleanField(default=True)
     
     def __str__(self):
@@ -146,7 +170,7 @@ class UserAlumno(models.Model):
 
 
 class UserProfesor(models.Model):
-    user_userprof = models.OneToOneField(User, on_delete=models.PROTECT)
+    user_userprof = models.OneToOneField(User, on_delete=models.CASCADE)
     active_userprof = models.BooleanField(default=True)
     
     def __str__(self):
@@ -159,7 +183,7 @@ class UserProfesor(models.Model):
 
 
 class UserAdministrativo(models.Model):
-    user_useradministrativo = models.OneToOneField(User, on_delete=models.PROTECT)
+    user_useradministrativo = models.OneToOneField(User, on_delete=models.CASCADE)
     active_useradministrativo = models.BooleanField(default=True)
     
     def __str__(self):
@@ -172,8 +196,10 @@ class UserAdministrativo(models.Model):
 
 
 class UserApoderado(models.Model):
-    user_userapoderado = models.OneToOneField(User, on_delete=models.PROTECT)
+    user_userapoderado = models.OneToOneField(User, on_delete=models.CASCADE)
     active_userapoderado = models.BooleanField(default=True)
+    alumno_userapoderado = models.ForeignKey(UserAlumno, on_delete=models.PROTECT)
+    es_sostenedor_userapoderado = models.BooleanField(default=True)
     
     def __str__(self):
         return self.user_userapoderado.first_name + ' ' + self.user_userapoderado.last_name
@@ -185,7 +211,7 @@ class UserApoderado(models.Model):
 
 
 class UserInspector(models.Model):
-    user_userinspector = models.OneToOneField(User, on_delete=models.PROTECT)
+    user_userinspector = models.OneToOneField(User, on_delete=models.CASCADE)
     active_userinspector = models.BooleanField(default=True)
     
     def __str__(self):
@@ -198,7 +224,7 @@ class UserInspector(models.Model):
 
 
 class UserAuditor(models.Model):
-    user_userauditor = models.OneToOneField(User, on_delete=models.PROTECT)
+    user_userauditor = models.OneToOneField(User, on_delete=models.CASCADE)
     active_useradmin = models.BooleanField(default=True)
     
     def __str__(self):

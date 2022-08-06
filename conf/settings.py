@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 import os
 from pathlib import Path
+from django.urls import reverse_lazy
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -39,15 +40,22 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
+    'rest_framework',
+    
+    'core.agenda',
+    'core.dash',
     'core.usuarios',
     'core.asistencia',
     'core.cursos',
     'core.asignaturas',
     'core.calendario',
     'core.libro_clases',
+    'core.public',
+    'core.mensualidades',
 ]
 
 MIDDLEWARE = [
+    'querycount.middleware.QueryCountMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -111,9 +119,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-es'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Santiago'
 
 USE_I18N = True
 
@@ -123,9 +131,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
-STATIC_FILES_DIRS = [
+STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
@@ -136,3 +144,17 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Indicamos cual es el usuario por defecto de la aplicación
 AUTH_USER_MODEL = 'usuarios.User'
+
+# Configuración de urls de login
+LOGIN_REDIRECT_URL = reverse_lazy('dashboard:index')
+LOGIN_URL = reverse_lazy('login')
+LOGOUT_URL = reverse_lazy('public:index')
+
+
+# Configuración de email
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'noreply.abodefen@gmail.com' # Crear un correo y cambiar esta variable
+EMAIL_HOST_PASSWORD = 'tjpizlmurcaeebom' # Tomar como variable de entorno
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
