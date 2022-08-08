@@ -1,6 +1,6 @@
 function cambiarProvincia() {
     let id_region = document.getElementById('id_region').value;
-    let url = 'http://localhost:8000/usuarios/provincias/?id_region=' + id_region;
+    let url = 'http://localhost:8000/dash/usuarios/provincias/?id_region=' + id_region;
     fetch(url)
         .then(res => res.text())
         .then(resultado => {
@@ -10,7 +10,7 @@ function cambiarProvincia() {
 
 function cambiarComuna() {
     let id_provincia = document.getElementById('id_provincia').value;
-    let url = 'http://localhost:8000/usuarios/comunas/?id_provincia=' + id_provincia;
+    let url = 'http://localhost:8000/dash/usuarios/comunas/?id_provincia=' + id_provincia;
     fetch(url)
         .then(res => res.text())
         .then(resultado => {
@@ -41,3 +41,7 @@ function rd_perfil(id_radio){
         
     });
 }
+
+document.getElementById('btn-limpiar-form').addEventListener('onclick', function(){
+    document.getElementById('form').reset();
+});

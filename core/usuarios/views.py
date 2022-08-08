@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views import generic
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.models import Group
 
 from core.usuarios import models
@@ -9,15 +9,16 @@ from core.usuarios import forms
 
 # Create your views here.
 # CRUD user
-class UserCreateView(generic.CreateView):
+class UserCreateView(LoginRequiredMixin, PermissionRequiredMixin,  generic.CreateView):
     """ Esta clase permite la creación de usuarios, y del perfil que se
         le asigne
-        TODO: agregar permisos de autenticación y autorización
+
     """
     model = models.User
     form_class = forms.UserCreateModelForm
     template_name = 'core/usuarios/create.html'
     success_url = reverse_lazy('usuarios:list')
+    permission_required = ['usuarios.view_user', 'usuarios.create_user']
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -54,16 +55,16 @@ class UserCreateView(generic.CreateView):
                 
             elif usuario.is_profesor:
                 print('usuario profesor')
-                profesor = models.UserProfesor.create(
-                    user_userprofesor = usuario,
-                    active_userprofesor = True
+                profesor = models.UserProfesor.objects.create(
+                    user_userprof = usuario,
+                    active_userprof = True
                 )
                 gpo_profesor = Group.objects.get(name='gpo_profesor')
                 usuario.groups.add(gpo_profesor)
                 
             elif usuario.is_administrativo:
                 print('usuario administrativo')
-                administrativo = models.UserAdministrativo.create(
+                administrativo = models.UserAdministrativo.objects.create(
                     user_useradministrativo = usuario,
                     active_useradministrativo = True
                 )
@@ -73,7 +74,7 @@ class UserCreateView(generic.CreateView):
             elif usuario.is_apoderado:
                 alumno = form.cleaned_data['alumno']
                 is_sostenedor = form.cleaned_data['is_sostenedor']
-                apoderado = models.UserApoderado.create(
+                apoderado = models.UserApoderado.objects.create(
                     user_userapoderado = usuario,
                     active_userapoderado = True,
                     alumno_userapoderado = alumno,
@@ -84,7 +85,7 @@ class UserCreateView(generic.CreateView):
                 
             elif usuario.is_inspector:
                 print('usuario inspector')
-                inspector = models.UserInspector.create(
+                inspector = models.UserInspector.objects.create(
                     user_userinspector = usuario,
                     active_userinspector = True
                 )
@@ -93,7 +94,7 @@ class UserCreateView(generic.CreateView):
                 
             elif usuario.is_auditor:
                 print('usuario auditor')
-                auditor = models.UserAuditor.create(
+                auditor = models.UserAuditor.objects.create(
                     user_userauditor = usuario,
                     active_userauditor = True,
                 )
@@ -107,19 +108,30 @@ class UserCreateView(generic.CreateView):
             return render(request, 'core/usuarios/create.html', {'form': form})
 
 
-class UserUpdateView(generic.UpdateView):
-    pass
+class UserUpdateView(LoginRequiredMixin, PermissionRequiredMixin, generic.UpdateView):
+    model = models.User
+    form_class = forms.UserUpdateModelForm
+    template_name = 'core/usuarios/update.html'
+    success_url = reverse_lazy('usuarios:list')
+    permission_required = ['usuarios.view_user', 'usuarios.change_user']
+    permission_denied_message = 'No posee los permisos necesarios para realizar esta acción'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Usuarios'
+        context['form_title'] = 'Actualización de Usuarios'
+        return context
 
 
-class UserListView(generic.ListView):
+class UserListView(LoginRequiredMixin, PermissionRequiredMixin, generic.ListView):
     """ Esta clase devuelve la lista de usuarios registrados
-        TODO: agregar permisos
-        TODO: restringir solo a usuarios logueados
         TODO: definir queryset
     """
     model = models.User
     paginate_by = 5 # TODO: cambiar 
     template_name = 'core/usuarios/list.html'
+    permission_required = ['usuarios.view_user']
+    permission_denied_message = 'No posee los permisos necesarios para acceder a esta información'
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -133,7 +145,21 @@ class UserDeleteView(generic.DeleteView):
 
 
 class UserDetailView(generic.DetailView):
-    pass
+    model = models.User
+    template_name = 'core/usuarios/detail.html'
+    context_object_name = 'usuario'
+    
+    def get_object(self):
+        obj = super().get_object()
+        return obj
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title_head'] = 'Usuarios'
+        context['title_page'] = 'Perfil de Usuario'
+        context['subtitle'] = ''
+        return context
+        
 
 
 class RegionListView(generic.ListView):

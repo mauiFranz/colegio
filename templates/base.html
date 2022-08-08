@@ -28,7 +28,8 @@
                             <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="{% url 'dashboard:index' %}">Dashboard</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Dash</li>
+                                    {% block breadcrumb_level_2 %}                                        
+                                    {% endblock breadcrumb_level_2 %}                                        
                                 </ol>
                             </nav>
                         </div>
@@ -52,7 +53,12 @@
                             <div class="card-body py-4 px-5">
                                 <div class="d-flex align-items-center">
                                     <div class="avatar avatar-xl">
-                                        <img src="{% static 'libs/mazer/images/faces/1.jpg' %}" alt="Face 1">
+                                        {% if request.user.foto_user %}
+                                            <img src="{{ request.user.foto_user.url }}" alt="{{ request.user.username }}">
+                                        {% else %}
+                                            <img src="{% static 'libs/mazer/images/faces/1.jpg' %}" alt="Face 1">
+                                        {% endif %}
+                                            
                                     </div>
                                     <div class="ms-3 name">
                                         <h5 class="font-bold">{{ request.user.first_name }} {{ request.user.last_name }}</h5>

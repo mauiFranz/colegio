@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+<!-- Inicio Formulario -->
+<!-- // Basic multiple Column Form section start -->
+<section id="multiple-column-form">
+    <div class="row match-height">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">{{ form_title }}</h4>
+                </div>
+                {% if form.errors %}
+                {% for field in form %}
+                {% for error in field.errors %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>{{ field.label }}: {{ error|escape }}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endfor %}
+                {% endfor %}
+                {% for error in form.non_field_errors %}
+                <div class="alert alert-danger alert-dismissible show fade" role="alert">
+                    <strong>{{ error|escape }}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endfor %}
+                {% endif %}
+                <div class="card-content">
+                    <div class="card-body">
+                        <form class="form form-horizontal" action="." enctype="multipart/form-data" method="POST" id="form">
+                            {% csrf_token %}
+                            <div class="form-body">
+                                <div class="row">
+                                    
+                                    {% block form_body %}
+                                    {% endblock form_body %}
+                                        
+                                    <hr>
+                                    <div class="card-header">
+                                        <h4 class="card-title">{{ form_subtitle }}</h4>
+                                    </div>
+                                    
+                                    {% block form_footer %}
+                                    {% endblock form_footer %}
+                                        
+                                    
+                                    {% block form_footer_hidden %}
+                                    {% endblock form_footer_hidden %}
+
+                                    
+                                    {% block form_buttons %}
+                                    {% endblock form_buttons %}
+                                        
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- // Basic multiple Column Form section end -->
+    
+{% endblock content %}

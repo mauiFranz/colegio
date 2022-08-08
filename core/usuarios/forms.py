@@ -1,7 +1,20 @@
 from django import forms
+from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 
 
 from core.usuarios import models
+
+
+
+class CustomUserChangeForm(UserChangeForm):
+    class Meta(UserChangeForm.Meta):
+        model = models.User
+        
+
+class CustomUserCreationForm(UserCreationForm):
+    class Meta(UserCreationForm.Meta):
+        model = models.User
+
 
 
 class UserCreateModelForm(forms.ModelForm):
@@ -101,4 +114,53 @@ class UserCreateModelForm(forms.ModelForm):
             dv_ingresado = (cleaned_data['dv_user']).upper()
             if dv_correcto != dv_ingresado:
                 raise forms.ValidationError('El Run ingresado no es correcto, verifique la información')
-            return cleaned_data                        
+            return cleaned_data
+        
+
+class UserUpdateModelForm(forms.ModelForm):
+    region = forms.ModelChoiceField(
+            queryset=models.Region.objects.all(),
+            label='Región',
+            required=False
+            )
+    provincia = forms.ModelChoiceField(
+        queryset=models.Provincia.objects.all(),
+        label='Provincia',
+        required=False
+        )
+    class Meta:
+        model = models.User
+        fields = [
+            'first_name',
+            'snombre_user',
+            'last_name',
+            'apmat_user',
+            'username',
+            'email',
+            'celular_user',
+            'direccion_user',
+            'comuna_user',
+            'foto_user',
+        ]
+        
+        labels = {
+            'first_name': 'Nombre',
+            'snombre_user': 'Segundo Nombre',
+            'last_name': 'Primer Apellido',
+            'apmat_user': 'Segundo Apellido',
+            'username': 'Username',
+            'email': 'Email',
+            'celular_user': 'Celular',
+            'direccion_user': 'Dirección',
+            'comuna_user': 'Comuna',
+            'foto_user': 'Foto',
+        }
+        
+        error_messages = {
+            'username': {
+                'unique': 'El Username ingresado ya existe en los registros'
+            },
+            'email': {
+                'unique': 'El Email ingresado ya existe en los registros'
+            }
+        }

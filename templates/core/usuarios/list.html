@@ -2,6 +2,10 @@
 {% load static %}
 
 
+{% block breadcrumb_level_2 %}
+<li class="breadcrumb-item active" aria-current="page"><a href="{% url 'usuarios:list' %}">Usuarios</a></li>
+{% endblock breadcrumb_level_2 %}
+    
 {% block encabezado %}
 <tr>
     <th>#</th>
@@ -27,7 +31,7 @@
                 <td class="text-bold-500">{{ user.run_user }}-{{ user.dv_user }}</td>
                 <td class="text-bold-500">{{ user.email }}</td>
                 <td class="text-bold-500">perfil</td> <!-- TODO: validar el perfil -->
-                <td><a href="#" class="btn btn-outline-primary"><i class="bi bi-pencil-square"></i> Editar</a></td>
+                <td><a href="{% url 'usuarios:update' user.pk %}" class="btn btn-outline-primary"><i class="bi bi-pencil-square"></i> Editar</a></td>
             </tr>
         {% endfor %}
     {% else %}
