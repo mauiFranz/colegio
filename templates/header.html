@@ -35,13 +35,13 @@
                             <a href="{% url 'usuarios:create' %}">Crear</a>
                         </li>
                         <li class="submenu-item ">
-                            <a href="component-button.html">Ver Perfil</a>
+                            <a href="{% url 'usuarios:detail' request.user.pk %}">Ver Perfil</a>
                         </li>
                         <li class="submenu-item ">
-                            <a href="component-card.html">Modificar Roles</a>
+                            <a href="{% url 'usuarios:roles_update' %}">Modificar Roles</a>
                         </li>
                         <li class="submenu-item ">
-                            <a href="component-carousel.html">Restablecer Contraseña</a>
+                            <a href="{% url 'password_change' %}">Restablecer Contraseña</a>
                         </li>
                     </ul>
                 </li>

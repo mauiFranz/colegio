@@ -1,0 +1,262 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block breadcrumb_level_2 %}
+    <li class="breadcrumb-item" aria-current="page"><a href="{% url 'usuarios:list' %}">Usuarios</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Modificar Perfiles</li>
+{% endblock breadcrumb_level_2 %}
+
+{% load static %}
+
+
+{% block content %}
+<!-- Inicio Formulario -->
+<section id="multiple-column-form">
+    <div class="row match-height">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">{{ form_title }}</h4>
+                </div>
+                {% if form.errors %}
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong>{{ field.label }}: {{ error|escape }}</strong>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                        <div class="alert alert-danger alert-dismissible show fade" role="alert">
+                            <strong>{{ error|escape }}</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                {% if not user_encontrado %}
+                <div class="card-content">
+                    <div class="card-body">
+                        <form class="form form-horizontal" action="." enctype="multipart/form-data" method="POST"
+                            id="form">
+                            {% csrf_token %}
+                            <div class="form-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="row">
+                                            <div class="col-sm-6 col-md-3 col-lg-3">
+                                                <label>Run: </label>
+                                            </div>
+                                            <div class="col-sm-6 col-md-5 col-lg-5">
+                                                <div class="form-group has-icon-left">
+                                                    <div class="position-relative">
+                                                        <input type="number" name="{{ form.run.name }}" class="form-control"
+                                                            placeholder="{{ form.run.label }}" required autofocus>
+                                                        <div class="form-control-icon">
+                                                            <i class="bi bi-person"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 col-md-4 col-lg-4 d-flex justify-content-end">
+                                                <button type="submit" class="btn btn-outline-primary me-1 mb-1">
+                                                    <i class="bi bi-sd-card-fill"></i> Buscar
+                                                </button>
+                                                <button id="btn-limpiar-form" type="reset"
+                                                    class="btn btn-outline-secondary me-1 mb-1">
+                                                    <i class="bi bi-brush-fill"></i> Limpiar
+                                                </button>
+                                                <input type="hidden" name="search" value="user">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                {% else %}
+                <form action="." method="POST">
+                    {% csrf_token %}
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6 col-lg-6">
+                                <p class="card">Usuario: {{ user_encontrado.first_name }} {{ user_encontrado.last_name }}</p>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-6">
+                                <p class="card">Perfil base: {{ user_encontrado.get_perfil_base_user_display }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6 col-lg-3">
+                                    <div class="form-group">
+                                        <div class='form-check'>
+                                            <div class="checkbox">
+                                                <input type="checkbox" name="{{ form.is_admin.name }}"
+                                                    id="{{ form.is_admin.name }}" class="form-check-input"
+                                                    {% if form.is_admin.value %}checked{% endif %}>
+                                                <label for="{{ form.is_admin.name }}">{{ form.is_admin.label }}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6 col-lg-3">
+                                    <div class="form-group">
+                                        <div class='form-check'>
+                                            <div class="checkbox">
+                                                <input type="checkbox" name="{{ form.is_alumno.name }}"
+                                                    id="{{ form.is_alumno.name }}" class="form-check-input"
+                                                    {% if form.is_alumno.value %}checked{% endif %}>
+                                                <label for="{{ form.is_alumno.name }}">{{ form.is_alumno.label }}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6 col-lg-3">
+                                    <div class="form-group">
+                                        <div class='form-check'>
+                                            <div class="checkbox">
+                                                <input type="checkbox" name="{{ form.is_profesor.name }}"
+                                                    id="{{ form.is_profesor.name }}" class="form-check-input"
+                                                    {% if form.is_profesor.value %}checked{% endif %}>
+                                                <label for="{{ form.is_profesor.name }}">{{ form.is_profesor.label }}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6 col-lg-3">
+                                    <div class="form-group">
+                                        <div class='form-check'>
+                                            <div class="checkbox">
+                                                <div class="checkbox">
+                                                    <input type="checkbox" name="{{ form.is_administrativo.name }}"
+                                                        id="{{ form.is_administrativo.name }}" class="form-check-input"
+                                                        {% if form.is_administrativo.value %}checked{% endif %}>
+                                                    <label for="{{ form.is_administrativo.name }}">{{ form.is_administrativo.label }}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6 col-lg-3">
+                                    <div class="form-group">
+                                        <div class='form-check'>
+                                            <div class="checkbox">
+                                                <input type="checkbox" name="{{ form.is_apoderado.name }}"
+                                                    id="{{ form.is_apoderado.name }}" class="form-check-input"
+                                                    {% if form.is_apoderado.value %}checked{% endif %}
+                                                    onclick="perfilApoderado(this)">
+                                                <label for="{{ form.is_apoderado.name }}">{{ form.is_apoderado.label }}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6 col-lg-3">
+                                    <div class="form-group">
+                                        <div class='form-check'>
+                                            <div class="checkbox">
+                                                <input type="checkbox" name="{{ form.is_inspector.name }}"
+                                                    id="{{ form.is_inspector.name }}" class="form-check-input"
+                                                    {% if form.is_inspector.value %}checked{% endif %}>
+                                                <label for="{{ form.is_inspector.name }}">{{ form.is_inspector.label }}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6 col-lg-3">
+                                    <div class="form-group">
+                                        <div class='form-check'>
+                                            <div class="checkbox">
+                                                <input type="checkbox" name="{{ form.is_auditor.name }}"
+                                                    id="{{ form.is_auditor.name }}" class="form-check-input"
+                                                    {% if form.is_auditor.value %}checked{% endif %}>
+                                                <label for="{{ form.is_auditor.name }}">{{ form.is_auditor.label }}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="div-apoderado" class="card-body">
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-6 col-12">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label>Alumno</label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="form-group has-icon-left">
+                                                <div class="position-relative">
+                                                    <fieldset class="form-group">
+                                                        <select class="form-select" name="{{ form.alumno.name }}"
+                                                            id="{{ form.alumno.auto_id }}">
+                                                            {% for key, value in form.alumno.field.choices %}
+                                                            <option
+                                                                value="{{ key }}{% if form.fields.alumno.value == key %}selected{% endif %}">
+                                                                {{ value }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </fieldset>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6 col-lg-3">
+                                    <div class="form-group">
+                                        <div class='form-check'>
+                                            <div class="checkbox">
+                                                <input type="checkbox" name="{{ form.is_sostenedor.name }}"
+                                                    id="{{ form.is_sostenedor.auto_id }}" class="form-check-input">
+                                                <label for="{{ form.is_sostenedor.auto_id }}">Es sostenedor</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 d-flex justify-content-end">
+                                <button type="submit" class="btn btn-outline-primary me-1 mb-1">
+                                    <i class="bi bi-sd-card-fill"></i> Guardar
+                                </button>
+                                <a href="{% url 'usuarios:roles_update' %}" class="btn btn-outline-secondary me-1 mb-1">
+                                    <i class="bi bi-brush-fill"></i> Volver
+                                </a>
+                                <input type="hidden" name="user" value="{{ user_encontrado.pk }}">
+                                <input type="hidden" name="search" value="perfil">
+                            </div>
+                        </div>
+                        <br>
+                    </div>    
+                </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}
+
+
+{% block blockjs %}
+    {% if messages %}
+        {% for msg in messages %}
+            <script>
+                notificationSwal(
+                    titulo='{{ msg.extra_tags.title }} {{ request.user.first_name }}', 
+                    texto='{{ msg }}', 
+                    icon='{{ msg.extra_tags.icon }}', 
+                    confirmButtonText='{{ msg.extra_tags.confirmButtonText }}'
+                );
+            </script>
+        {% endfor %}
+    {% endif %}
+{% endblock blockjs %}

@@ -151,7 +151,7 @@
                 <div class="position-relative">
                     <fieldset class="form-group">
                         <select class="form-select" name="{{ form.region.name }}" id="{{ form.region.auto_id }}"
-                            onchange="">
+                            onchange="cambiarProvincia()">
                             {% for key, valor in form.region.field.choices %}
                                 <option value="{{ key }}"{% if form.fields.region.value == key %} selected {% endif %}>
                                     {{ valor }}
@@ -260,4 +260,19 @@
         </button>
     </div>
 </div>
+{% if messages %} 
+    {% for msg in messages %}
+        <script>
+            Swal.fire({
+                'title': 'Título',
+                'text': msg,
+                'icon': 'question',
+                'showCancelButton': true,
+                'cancelButtonText': 'Volver',
+                'confirmButtonText': "Eliminar",
+                'confirmButtonColor': '#dc3545',
+            });
+        </script>
+    {% endfor %}
+{% endif %}
 {% endblock form_buttons %}

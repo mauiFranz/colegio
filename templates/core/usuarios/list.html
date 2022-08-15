@@ -14,8 +14,9 @@
     <th>S. APELLIDO</th>
     <th>RUN</th>
     <th>EMAIL</th>
+    <th>EDITAR</th>
     <th>PERFIL</th>
-    <th>DETALLE</th>
+    <th>ELIMINAR</th>
 </tr>
 {% endblock encabezado %}
     
@@ -30,8 +31,10 @@
                 <td class="text-bold-500">{{ user.apmat_user }}</td>
                 <td class="text-bold-500">{{ user.run_user }}-{{ user.dv_user }}</td>
                 <td class="text-bold-500">{{ user.email }}</td>
-                <td class="text-bold-500">perfil</td> <!-- TODO: validar el perfil -->
                 <td><a href="{% url 'usuarios:update' user.pk %}" class="btn btn-outline-primary"><i class="bi bi-pencil-square"></i> Editar</a></td>
+                <td><a href="{% url 'usuarios:detail' user.pk %}" class="btn btn-outline-secondary"><i class="bi bi-person-lines-fill"></i> Perfil</a></td>
+                <!-- <td><a href="{% url 'usuarios:delete' user.pk %}" class="btn btn-outline-danger"><i class="bi bi-trash"></i> Eliminar</a></td> -->
+                <td><a href="{% url 'usuarios:delete' user.pk %}" class="btn btn-outline-danger btn-eliminar"><i class="bi bi-trash"></i> Eliminar</a></td>
             </tr>
         {% endfor %}
     {% else %}
@@ -44,6 +47,10 @@
 
 {% block table_foot %}
     <tr>
-        <td colspan="6"><a href="{% url 'usuarios:create' %}" class="btn btn-outline-success"><i class="bi bi-person-plus-fill"></i> Agregar</a></td>
+        <td colspan="6">
+            <a href="{% url 'usuarios:create' %}" class="btn btn-outline-success"><i class="bi bi-person-plus-fill"></i> Agregar</a>
+        </td>
     </tr>
 {% endblock table_foot %}
+
+    

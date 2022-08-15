@@ -16,7 +16,6 @@ class CustomUserCreationForm(UserCreationForm):
         model = models.User
 
 
-
 class UserCreateModelForm(forms.ModelForm):
     region = forms.ModelChoiceField(
             queryset=models.Region.objects.all(),
@@ -112,6 +111,7 @@ class UserCreateModelForm(forms.ModelForm):
             valor = 11 - sum([int(a) * int(b) for a, b in zip(str(run_user).zfill(8), '32765432')]) % 11
             dv_correcto = { 10: 'K', 11: '0'}.get(valor, str(valor))
             dv_ingresado = (cleaned_data['dv_user']).upper()
+            
             if dv_correcto != dv_ingresado:
                 raise forms.ValidationError('El Run ingresado no es correcto, verifique la información')
             return cleaned_data
@@ -164,3 +164,45 @@ class UserUpdateModelForm(forms.ModelForm):
                 'unique': 'El Email ingresado ya existe en los registros'
             }
         }
+
+
+class PerfilesModelForm(forms.ModelForm):
+    alumno = forms.ModelChoiceField(
+        queryset= models.User.objects.filter(is_alumno=True),
+        label='Alumno',
+        required=False
+    )
+    is_sostenedor = forms.BooleanField(
+        label='Es sostenedor',
+        required=False
+    )
+    class Meta:
+        model = models.User
+        fields = [
+            'is_admin',
+            'is_administrativo',
+            'is_alumno',
+            'is_apoderado',
+            'is_auditor',
+            'is_inspector',
+            'is_profesor',
+        ]
+        
+        labels = {
+            'is_admin': 'Administrador',
+            'is_administrativo': 'Administrativo',
+            'is_alumno': 'Alumno',
+            'is_apoderado': 'Apoderado',
+            'is_auditor': 'Auditor',
+            'is_inspector': 'Inspector',
+            'is_profesor': 'Profesor'
+        }
+       
+        
+class RunSearchForm(forms.Form):
+    run = forms.IntegerField(
+        label='Run sin Dv',
+        max_value=99999999,
+        min_value=11111111,
+        required=True,
+    )

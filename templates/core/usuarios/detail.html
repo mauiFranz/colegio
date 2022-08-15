@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+<section id="content-types">
+    <div class="row">
+        <div class="col-sm-12 col-md-6 col-lg-4">
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-header">
+                        <h3 class="card-title">{{ request.user.first_name }} {{ request.user.last_name }}</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6 col-lg-3">
+                                <div class="d-flex align-items-center">
+                                    <div class="avatar avatar-xl">
+                                        {% if request.user.foto_user %}
+                                            <img src="{{ request.user.foto_user.url }}" alt="{{ request.user.username }}">
+                                        {% else %}
+                                            <img src="{% static 'libs/mazer/images/faces/1.jpg' %}" alt="Face 1">
+                                        {% endif %}  
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-9">
+                                <h5>Full Stack Developer</h5>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                                    Explicabo tenetur officia doloribus consequuntur animi cupiditate.</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-4">
+                                <p>kcosamx</p>
+                            </div>
+                            <div class="col-4">
+                                <p>osdcondasmx</p>
+                            </div>
+                            <div class="col-4">
+                                <p>sdvnbincmxs</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-8">
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-header">
+                        <h3 class="card-title">SUBTITULO</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                                    Ex minus suscipit temporibus! Corporis vero eius ratione iste provident qui rem libero, 
+                                    ea odio commodi numquam dolor velit fuga fugit est?</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-content">
+                <div class="card-header">
+                    <h3 class="card-title">Información Personal</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6 col-lg-6">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <h6>Nombre:</h6>
+                                    <p>Francisco Olivares</p>
+                                </div>
+                                <div class="col-md-8">
+                                    <p>Francisco Olivares González</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <h6>Nombre:</h6>
+                                </div>
+                                <div class="col-md-8">
+                                    <p>Francisco Olivares González</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <h6>Nombre:</h6>
+                                </div>
+                                <div class="col-md-8">
+                                    <p>Francisco Olivares González</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <h6>Nombre:</h6>
+                                </div>
+                                <div class="col-md-8">
+                                    <p>Francisco Olivares González</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <h6>Nombre:</h6>
+                                </div>
+                                <div class="col-md-8">
+                                    <p>Francisco Olivares González</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-lg-6">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <h6>Nombre:</h6>
+                                </div>
+                                <div class="col-md-8">
+                                    <p>Francisco Olivares González</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <h6>Nombre:</h6>
+                                </div>
+                                <div class="col-md-8">
+                                    <p>Francisco Olivares González</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <h6>Nombre:</h6>
+                                </div>
+                                <div class="col-md-8">
+                                    <p>Francisco Olivares González</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <h6>Nombre:</h6>
+                                </div>
+                                <div class="col-md-8">
+                                    <p>Francisco Olivares González</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <h6>Nombre:</h6>
+                                </div>
+                                <div class="col-md-8">
+                                    <p>Francisco Olivares González</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}
+    

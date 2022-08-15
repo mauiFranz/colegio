@@ -29,9 +29,14 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# administradores y encargados del sistema
+ADMINS = (('Webmaster','fran.olivares.go@gmail.com'), ('Administrador', 'fran.olivares.go@gmail.com'))
+MANAGERS = ADMINS
+
+# Envío de mensajes internos
+MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -41,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     
     'rest_framework',
+    'debug_toolbar',
     
     'core.agenda',
     'core.dash',
@@ -55,6 +61,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'querycount.middleware.QueryCountMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -164,3 +171,9 @@ EMAIL_HOST_USER = 'noreply.abodefen@gmail.com' # Crear un correo y cambiar esta 
 EMAIL_HOST_PASSWORD = 'tjpizlmurcaeebom' # Tomar como variable de entorno
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+
+
+INTERNAL_IPS = [
+    '127.0.0.1',
+    'localhost',
+]

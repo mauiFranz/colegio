@@ -16,6 +16,7 @@ urlpatterns = [
     path('dash/asignaturas/', include('core.asignaturas.urls')),
     path('dash/libro-clases/', include('core.libro_clases.urls')),
     path('dash/mensualidades/', include('core.mensualidades.urls')),
+    path('__debug__/', include('debug_toolbar.urls')),
     
     # API URLS
     # path('api/v1/', include('core.usuarios.api.routers')),

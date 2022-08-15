@@ -5,7 +5,7 @@ function cambiarProvincia() {
         .then(res => res.text())
         .then(resultado => {
             document.getElementById('id_provincia').innerHTML = resultado;
-        })
+        });
 }
 
 function cambiarComuna() {
@@ -15,7 +15,7 @@ function cambiarComuna() {
         .then(res => res.text())
         .then(resultado => {
             document.getElementById('id_comuna_user').innerHTML = resultado;
-        })
+        });
 }
 
 function mostrarApoderado(){
@@ -24,6 +24,14 @@ function mostrarApoderado(){
 
 function ocultarApoderado(){
     document.getElementById('div-apoderado').style.display = 'none';
+}
+
+function perfilApoderado(radio){
+    if(radio.checked){
+        mostrarApoderado();
+    }else{
+        ocultarApoderado();
+    }
 }
 
 function rd_perfil(id_radio){
@@ -41,7 +49,44 @@ function rd_perfil(id_radio){
         
     });
 }
+//document.getElementById('btn-limpiar-form').addEventListener('onclick', function(){
+//    document.getElementById('form').reset();
+//});
 
-document.getElementById('btn-limpiar-form').addEventListener('onclick', function(){
-    document.getElementById('form').reset();
-});
+
+// const btns_eliminacion = document.querySelectorAll('.btn-eliminar');
+
+
+// (function (){
+//     Swal.fire({
+//         'title': 'Hola',
+//         'text': 'Wena Maui!!',
+//         'icon': 'success',
+//         'showCancelButton': true,
+//         'cancelButtonText': 'Volver',
+//         'confirmButtonText': 'Cancel',
+//         'confirmButtonColor': '#dc3545',
+//     });
+// })();
+
+const notificationSwal = (titulo, texto, icon, confirmButtonText)=>{
+    Swal.fire({
+        'title': titulo,
+        'text': texto,
+        'icon': icon, // warning, error, success, info
+        'confirmButtonText': confirmButtonText,
+        'confirmButtonColor': '#dc3545',
+    });
+}
+
+const questionSwal = (titulo, texto, icon, showCancelButton, cancelButtonText, confirmButtonText) => {
+    Swal.fire({
+        'title': titulo,
+        'text': texto,
+        'icon': icon, // warning, error, success, info
+        'showCancelButton': showCancelButton,
+        'cancelButtonText': cancelButtonText,
+        'confirmButtonText': confirmButtonText,
+        'confirmButtonColor': '#dc3545',
+    })
+}

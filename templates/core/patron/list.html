@@ -10,29 +10,27 @@
             <div class="card-body">
                 <h4 class="card-title">{{ table_title }}</h4>
                 <p class="card-text">
-                    Gummies bonbon apple pie fruitcake icing biscuit apple pie jelly-o sweet
-                    roll. Toffee
-                    sugar plum sugar plum jelly-o jujubes bonbon dessert carrot cake.
+                    Usuarios vigentes registrados en la aplicación
                 </p>
                 <!-- Table with outer spacing -->
-                <div class="table-responsive">
-                    <table class="table table-lg table-hover">
-                        <thead class="table-dark">
+                <div class="table-responsive-sm">
+                    <table class="table table-responsive table-responsive-sm table-hover">
+                        <thead class="">
                             <tr>
                                 <!-- Encabezados de Tabla -->
                                 {% block encabezado %}
                                 {% endblock encabezado %}
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="table-group-divider">
                             <!-- Filas de la Tabla -->
                             {% block filas %}
-                            {% endblock filas %} 
+                            {% endblock filas %}
                         </tbody>
                         <tfoot>
                             <!-- Footer de la Tabla -->
                             {% block table_foot %}
-                            {% endblock table_foot %} 
+                            {% endblock table_foot %}
                         </tfoot>
                     </table>
                 </div>
@@ -50,7 +48,7 @@
                         <a class="page-link" href="#">Previous</a>
                     </li>
                 {% endif %}
-        
+
                 {% for page in paginator.page_range %}
                     {% if page_obj.number == page %}
                         <li class="page-item active">
@@ -62,7 +60,7 @@
                         </li>
                     {% endif %}
                 {% endfor %}
-        
+
                 {% if page_obj.has_next %}
                     <li class="page-item">
                         <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
@@ -77,4 +75,7 @@
         {% endif %}
     </div>
 </div>
+
 {% endblock content %}
+
+

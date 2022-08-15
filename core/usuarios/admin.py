@@ -58,6 +58,7 @@ class CustomUserAdmin(UserAdmin):
                     'is_superuser',
                     'groups',
                     'user_permissions',
+                    'perfil_base_user',
                 )
             }
         ),
@@ -70,7 +71,7 @@ class CustomUserAdmin(UserAdmin):
             }
         )
     )
-    list_display = ['username', 'run_user', 'dv_user', 'first_name', 'last_name', 'apmat_user', 'email']
+    list_display = ['username', 'run_user', 'dv_user', 'first_name', 'last_name', 'apmat_user', 'email', 'perfil_base_user']
 
 
 class RegionModelAdmin(admin.ModelAdmin):
