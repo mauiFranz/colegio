@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 import os
+from os import environ as env
 from pathlib import Path
 from django.urls import reverse_lazy
 
@@ -22,15 +23,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-c1ldy68gycc-$8hqfy$0mw@iq%4cj%%vgqfcxgn=k_*&@%qd7d'
+SECRET_KEY = env.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DJANGO_DEBUG', False)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = env.get('DJANGO_ALLOWED_HOSTS').split(' ')
 
 # administradores y encargados del sistema
-ADMINS = (('Webmaster','fran.olivares.go@gmail.com'), ('Administrador', 'fran.olivares.go@gmail.com'))
+ADMINS = (('Webmaster', str(env.get('WEBMASTER_EMAIL'))), ('Administrador', env.get('ADMINISTRADOR_EMAIL')))
 MANAGERS = ADMINS
 
 # Envío de mensajes internos
@@ -140,14 +141,19 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
-
+if DEBUG:
+    STATICFILES_DIRS = [
+        os.path.join(BASE_DIR, 'static'),
+    ]
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+else:
+    STATIC_ROOT = [
+        '/usr/src/app/static',
+    ]
+    MEDIA_ROOT = '/usr/src/app/media'
+    
 # Media files configuration
 MEDIA_URL = '/media/'
-
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 # Default primary key field type
@@ -166,13 +172,13 @@ LOGOUT_URL = reverse_lazy('public:index')
 
 # Configuración de email
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'noreply.abodefen@gmail.com' # Crear un correo y cambiar esta variable
-EMAIL_HOST_PASSWORD = 'tjpizlmurcaeebom' # Tomar como variable de entorno
-EMAIL_PORT = 587
+EMAIL_HOST = env.get('EMAIL_HOST')
+EMAIL_HOST_USER = env.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env.get('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = int(env.get('EMAIL_PORT'))
 EMAIL_USE_TLS = True
 
-
+# Configuración para mantener el monitoreo de rendimiento de la app debug_toolbar
 INTERNAL_IPS = [
     '127.0.0.1',
     'localhost',
