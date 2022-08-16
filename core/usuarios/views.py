@@ -300,13 +300,13 @@ class RolesUpdateView(LoginRequiredMixin, PermissionRequiredMixin, View):
             usuario = None
 
             # Se recupera el usuario que se está modificando
-            usuario = self.model.objects.filter(
-                pk=request.POST['user']).first()
+            formulario = forms.PerfilesModelForm(request.POST)
+            usuario = self.model.objects.filter(pk=formulario.cleaned_data['user']).first()
             perfil_defecto = usuario.perfil_base_user
 
             # Obtener lista de perfiles antiguos
             perfiles_antiguos = usuario.get_all_perfiles_vigentes()
-            print(f'views.py => line 310 => request == {request.POST}')
+            print(f'views.py => line 310 => request == {request.POST}')            
             print(f'views.py => line 311 => perfiles_antiguos == {perfiles_antiguos}')
             for param in request.POST:
                 # Se quita to token del formulario de la lista
@@ -317,7 +317,7 @@ class RolesUpdateView(LoginRequiredMixin, PermissionRequiredMixin, View):
                 perfiles_nuevos.remove('user')
                 perfiles_nuevos.remove('alumno')
                 perfiles_nuevos.remove('search')
-                perfiles_nuevos.remove(usuario.perfil_base_user)
+                perfiles_nuevos.remove(perfil_defecto)
                 
             except:
                 form = forms.PerfilesModelForm(instance=usuario)
