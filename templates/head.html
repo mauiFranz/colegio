@@ -1,0 +1,33 @@
+{% load static %}
+ 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | {{ title }}</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap 5 -->
+    <link rel="stylesheet" href="{% static 'libs/mazer/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'libs/bootstrap/bootstrap-icons/bootstrap-icons.css' %}">
+
+    <!-- Sweet alert usado para modales de advertencia -->
+    <!-- TODO: mover al template que corresponda e importar con un block -->
+    <link rel="stylesheet" href="{% static 'libs/mazer/vendors/sweetalert2/sweetalert2.min.css' %}">
+
+
+    <!-- Mazer Template -->
+    <link rel="stylesheet" href="{% static 'libs/mazer/vendors/iconly/bold.css' %}">
+    <link rel="stylesheet" href="{% static 'libs/mazer/vendors/perfect-scrollbar/perfect-scrollbar.css' %}">
+    <link rel="stylesheet" href="{% static 'libs/mazer/css/app.css' %}">
+    
+    <!-- Error Page -->
+    <link rel="stylesheet" href="{% static 'libs/mazer/css/pages/error.css' %}">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+
+    <link rel="shortcut icon" href="assets/images/favicon.svg" type="image/x-icon">
+    <!-- TODO: agregar la capacidad de que todos los templates agregen js o css -->
+
+</head>

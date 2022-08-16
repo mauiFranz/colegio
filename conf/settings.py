@@ -11,7 +11,9 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 import os
+from os import environ as env
 from pathlib import Path
+from django.urls import reverse_lazy
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,16 +23,21 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-c1ldy68gycc-$8hqfy$0mw@iq%4cj%%vgqfcxgn=k_*&@%qd7d'
+SECRET_KEY = env.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DJANGO_DEBUG', False)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = env.get('DJANGO_ALLOWED_HOSTS').split(' ')
 
+# administradores y encargados del sistema
+ADMINS = (('Webmaster', str(env.get('WEBMASTER_EMAIL'))), ('Administrador', env.get('ADMINISTRADOR_EMAIL')))
+MANAGERS = ADMINS
+
+# Envío de mensajes internos
+MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -39,15 +46,24 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
+    'rest_framework',
+    'debug_toolbar',
+    
+    'core.agenda',
+    'core.dash',
     'core.usuarios',
     'core.asistencia',
     'core.cursos',
     'core.asignaturas',
     'core.calendario',
     'core.libro_clases',
+    'core.public',
+    'core.mensualidades',
 ]
 
 MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'querycount.middleware.QueryCountMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -111,9 +127,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-es'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Santiago'
 
 USE_I18N = True
 
@@ -123,11 +139,22 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
-STATIC_FILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
+if DEBUG:
+    STATICFILES_DIRS = [
+        os.path.join(BASE_DIR, 'static'),
+    ]
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+else:
+    STATIC_ROOT = [
+        '/usr/src/app/static',
+    ]
+    MEDIA_ROOT = '/usr/src/app/media'
+    
+# Media files configuration
+MEDIA_URL = '/media/'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -136,3 +163,23 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Indicamos cual es el usuario por defecto de la aplicación
 AUTH_USER_MODEL = 'usuarios.User'
+
+# Configuración de urls de login
+LOGIN_REDIRECT_URL = reverse_lazy('dashboard:index')
+LOGIN_URL = reverse_lazy('login')
+LOGOUT_URL = reverse_lazy('public:index')
+
+
+# Configuración de email
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = env.get('EMAIL_HOST')
+EMAIL_HOST_USER = env.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env.get('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = int(env.get('EMAIL_PORT'))
+EMAIL_USE_TLS = True
+
+# Configuración para mantener el monitoreo de rendimiento de la app debug_toolbar
+INTERNAL_IPS = [
+    '127.0.0.1',
+    'localhost',
+]

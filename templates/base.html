@@ -1,0 +1,128 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+{% include 'head.html' %}
+
+<body>
+    <div id="app">
+
+        {% include 'header.html' %}
+
+        <div id="main">
+            <header class="mb-3">
+                <a href="#" class="burger-btn d-block d-xl-none">
+                    <i class="bi bi-justify fs-3"></i>
+                </a>
+            </header>
+            <!-- Page heading -->
+            <div class="page-heading">
+                <div class="page-title">
+                    <div class="row">
+                        <div class="col-12 col-md-6 order-md-1 order-last">
+                            <h3>Dashboard</h3>
+                            <p class="text-subtitle text-muted">Toda la información acádemica del alumno a su alcance.
+                            </p>
+                        </div>
+                        <div class="col-12 col-md-6 order-md-2 order-first">
+                            <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="{% url 'dashboard:index' %}">Dashboard</a></li>
+                                    {% block breadcrumb_level_2 %}                                        
+                                    {% endblock breadcrumb_level_2 %}                                        
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="page-content">
+                <section class="row">
+                    <div class="col-12 col-lg-9">
+                        <div class="row">
+                            <!-- Panel Principal -->
+                            {% block content %}
+
+                            {% endblock content %}
+                        </div>
+                    </div>
+                    <!-- Panel Lateral -->
+                    <div class="col-12 col-lg-3">
+                        <!-- Usuario logueado -->
+                        <div class="card">
+                            <div class="card-body py-4 px-5">
+                                <div class="d-flex align-items-center">
+                                    <div class="avatar avatar-xl">
+                                        {% if request.user.foto_user %}
+                                            <img src="{{ request.user.foto_user.url }}" alt="{{ request.user.username }}">
+                                        {% else %}
+                                            <img src="{% static 'libs/mazer/images/faces/1.jpg' %}" alt="Face 1">
+                                        {% endif %}
+                                            
+                                    </div>
+                                    <div class="ms-3 name">
+                                        <h5 class="font-bold">{{ request.user.first_name }} {{ request.user.last_name }}</h5>
+                                        <h6 class="text-muted mb-0">@{{ request.user.username }}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>Informaciones</h3>
+                            </div>
+                            <div class="card-content pb-4">
+                                <div class="recent-message d-flex px-4 py-3">
+                                    <div class="name">
+                                        <h5 class="mb-1">Convivencia escolar</h5>
+                                        <p class="text-muted mb-0">El día lunes 30 se llevará a cabo la Convivencia
+                                            escolar del fin de semestre
+                                        </p>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="recent-message d-flex px-4 py-3">
+                                    <div class="name">
+                                        <h5 class="mb-1">Vacunación</h5>
+                                        <h6 class="text-muted mb-0">Se realizará vacunación para los 2° básicos,
+                                            la segunda semana de abril.
+                                        </h6>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="recent-message d-flex px-4 py-3">
+                                    <div class="name">
+                                        <h5 class="mb-1">Visita Profesional</h5>
+                                        <h6 class="text-muted mb-0">@dodoljohn</h6>
+                                    </div>
+                                </div>
+                                <div class="px-4">
+                                    <button class='btn btn-block btn-xl btn-light-primary font-bold mt-3'>Tablero de
+                                        Informaciones</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>Alumnos Aprobados</h4>
+                            </div>
+                            <div class="card-body">
+                                <div id="chart-visitors-profile"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            {% include 'footer.html' %}
+        </div>
+
+        {% include 'scripts.html' %}
+        
+        {% block blockjs %}
+        {% endblock blockjs %}
+            
+            
+</body>
+
+</html>

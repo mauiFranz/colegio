@@ -1,0 +1,199 @@
+{% load static %}
+
+
+<div id="sidebar" class="active">
+    <div class="sidebar-wrapper active">
+        <div class="sidebar-header">
+            <div class="d-flex justify-content-between">
+                <div class="logo">
+                    <a href="{% url 'dashboard:index' %}"><img src="{% static 'libs/mazer/images/logo/logo.png' %}" alt="Logo" srcset=""></a>
+                </div>
+                <!-- Botón logout -->
+                <div class="stats-ico ed">
+                    <a class="btn btn-sm btn-outline-primary" href="{% url 'logout' %}"><i class="iconly-boldLogout"></i></a>
+                </div>
+                <div class="toggler">
+                    <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="sidebar-menu">
+            <ul class="menu">
+                <li class="sidebar-title">Menu Principal</li>
+
+                <!-- Menú Usuarios -->
+                <li class="sidebar-item  has-sub">
+                    <a href="#" class='sidebar-link'>
+                        <i class="bi bi-person-badge-fill"></i>
+                        <span>Administración de Usuarios</span>
+                    </a>
+                    <ul class="submenu ">
+                        <li class="submenu-item ">
+                            <a href="{% url 'usuarios:list' %}">Listado</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="{% url 'usuarios:create' %}">Crear</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="{% url 'usuarios:detail' request.user.pk %}">Ver Perfil</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="{% url 'usuarios:roles_update' %}">Modificar Roles</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="{% url 'password_change' %}">Restablecer Contraseña</a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- Fin Menú Usuarios -->
+
+                <!-- Menú Control de Asistencia -->
+                <li class="sidebar-item  has-sub">
+                    <a href="#" class='sidebar-link'>
+                        <i class="bi bi-pen-fill"></i>
+                        <span>Control Asistencia</span>
+                    </a>
+                    <ul class="submenu ">
+                        <li class="submenu-item ">
+                            <a href="extra-component-avatar.html">Avatar</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="extra-component-sweetalert.html">Sweet Alert</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="extra-component-toastify.html">Toastify</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="extra-component-rating.html">Rating</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="extra-component-divider.html">Divider</a>
+                        </li>
+                    </ul>
+                </li>
+
+
+                <!-- Menú Cursos -->
+                <li class="sidebar-item  has-sub">
+                    <a href="#" class='sidebar-link'>
+                        <i class="bi bi-file-earmark-spreadsheet-fill"></i>
+                        <span>Cursos</span>
+                    </a>
+                    <ul class="submenu ">
+                        <li class="submenu-item ">
+                            <a href="layout-default.html">Default Layout</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="layout-vertical-1-column.html">1 Column</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="layout-vertical-navbar.html">Vertical with Navbar</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="layout-horizontal.html">Horizontal Menu</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- TODO: verificar si se requiere separador para el menú, si es así usar li de abajo -->
+                <!-- <li class="sidebar-title">Forms &amp; Tables</li> -->
+
+                <!-- Menú Libro de Clases -->
+                <li class="sidebar-item  has-sub">
+                    <a href="#" class='sidebar-link'>
+                        <i class="bi bi-journal-bookmark-fill"></i>
+                        <span>Libro de Clases</span>
+                    </a>
+                    <ul class="submenu ">
+                        <li class="submenu-item ">
+                            <a href="form-element-input.html">Input</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="form-element-input-group.html">Input Group</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="form-element-select.html">Select</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="form-element-radio.html">Radio</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="form-element-checkbox.html">Checkbox</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="form-element-textarea.html">Textarea</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- Menú Asignaturas -->
+                <li class="sidebar-item  has-sub">
+                    <a href="#" class='sidebar-link'>
+                        <i class="bi bi-file-earmark-medical-fill"></i>
+                        <span>Asignaturas</span>
+                    </a>
+                    <ul class="submenu ">
+                        <li class="submenu-item ">
+                            <a href="form-editor-quill.html">Quill</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="form-editor-ckeditor.html">CKEditor</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="form-editor-summernote.html">Summernote</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="form-editor-tinymce.html">TinyMCE</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- Menú Calendario -->
+                <li class="sidebar-item  has-sub">
+                    <a href="#" class='sidebar-link'>
+                        <i class="bi bi-calendar3"></i>
+                        <span>Calendario</span>
+                    </a>
+                    <ul class="submenu ">
+                        <li class="submenu-item ">
+                            <a href="form-editor-quill.html">Quill</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="form-editor-ckeditor.html">CKEditor</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="form-editor-summernote.html">Summernote</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="form-editor-tinymce.html">TinyMCE</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- Menú Mensualidades -->
+                <li class="sidebar-item  has-sub">
+                    <a href="#" class='sidebar-link'>
+                        <i class="bi bi-cash-coin"></i>
+                        <span>Mensualidades</span>
+                    </a>
+                    <ul class="submenu ">
+                        <li class="submenu-item ">
+                            <a href="form-editor-quill.html">Quill</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="form-editor-ckeditor.html">CKEditor</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="form-editor-summernote.html">Summernote</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="form-editor-tinymce.html">TinyMCE</a>
+                        </li>
+                    </ul>
+                </li>
+
+            </ul>
+        </div>
+        <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
+    </div>
+</div>

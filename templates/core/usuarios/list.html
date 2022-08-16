@@ -1,0 +1,56 @@
+{% extends 'core/patron/list.html' %}
+{% load static %}
+
+
+{% block breadcrumb_level_2 %}
+<li class="breadcrumb-item active" aria-current="page"><a href="{% url 'usuarios:list' %}">Usuarios</a></li>
+{% endblock breadcrumb_level_2 %}
+    
+{% block encabezado %}
+<tr>
+    <th>#</th>
+    <th>NOMBRE</th>
+    <th>P. APELLIDO</th>
+    <th>S. APELLIDO</th>
+    <th>RUN</th>
+    <th>EMAIL</th>
+    <th>EDITAR</th>
+    <th>PERFIL</th>
+    <th>ELIMINAR</th>
+</tr>
+{% endblock encabezado %}
+    
+
+{% block filas %}
+    {% if object_list %}
+        {% for user in object_list %}
+            <tr>
+                <td class="text-bold-500">{{ forloop.counter }}</td>
+                <td class="text-bold-500">{{ user.first_name }}</td>
+                <td class="text-bold-500">{{ user.last_name }}</td>
+                <td class="text-bold-500">{{ user.apmat_user }}</td>
+                <td class="text-bold-500">{{ user.run_user }}-{{ user.dv_user }}</td>
+                <td class="text-bold-500">{{ user.email }}</td>
+                <td><a href="{% url 'usuarios:update' user.pk %}" class="btn btn-outline-primary"><i class="bi bi-pencil-square"></i> Editar</a></td>
+                <td><a href="{% url 'usuarios:detail' user.pk %}" class="btn btn-outline-secondary"><i class="bi bi-person-lines-fill"></i> Perfil</a></td>
+                <!-- <td><a href="{% url 'usuarios:delete' user.pk %}" class="btn btn-outline-danger"><i class="bi bi-trash"></i> Eliminar</a></td> -->
+                <td><a href="{% url 'usuarios:delete' user.pk %}" class="btn btn-outline-danger btn-eliminar"><i class="bi bi-trash"></i> Eliminar</a></td>
+            </tr>
+        {% endfor %}
+    {% else %}
+        <tr>
+            <td class="text-bold-500" colspan="6">No se encontraron resultados</td>
+        </tr>
+    {% endif %}
+{% endblock filas %}
+    
+
+{% block table_foot %}
+    <tr>
+        <td colspan="6">
+            <a href="{% url 'usuarios:create' %}" class="btn btn-outline-success"><i class="bi bi-person-plus-fill"></i> Agregar</a>
+        </td>
+    </tr>
+{% endblock table_foot %}
+
+    

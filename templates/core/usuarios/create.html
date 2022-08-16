@@ -1,0 +1,446 @@
+{% extends 'core/patron/create.html' %}
+{% load static %}
+
+
+
+{% block breadcrumb_level_2 %}
+<li class="breadcrumb-item" aria-current="page"><a href="{% url 'usuarios:list' %}">Usuarios</a></li>
+<li class="breadcrumb-item active" aria-current="page">Crear</li>
+{% endblock breadcrumb_level_2 %}
+
+{% block form_body %}
+<div class="col-md-6 col-12">
+    <div class="row">
+        <div class="col-md-4">
+            <label>{{ form.first_name.label }}</label>
+        </div>
+        <div class="col-md-8">
+            <div class="form-group has-icon-left">
+                <div class="position-relative">
+                    <input type="text" id="{{ form.run_user.auto_id }}" name="{{ form.first_name.name }}"
+                        class="form-control" placeholder="{{ form.first_name.label }}" required
+                        value="{% if form.first_name.value is not None %}{{ form.first_name.value }}{% endif %}">
+                    <div class="form-control-icon">
+                        <i class="bi bi-person"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-6 col-12">
+    <div class="row">
+        <div class="col-md-4">
+            <label>{{ form.snombre_user.label }}</label>
+        </div>
+        <div class="col-md-8">
+            <div class="form-group has-icon-left">
+                <div class="position-relative">
+                    <input type="text" id="{{ form.snombre_user.auto_id }}" name="{{ form.snombre_user.name }}"
+                        class="form-control" placeholder="{{ form.snombre_user.label }}"
+                        value="{% if form.snombre_user.value is not None %}{{ form.snombre_user.value }}{% endif %}">
+                    <div class="form-control-icon">
+                        <i class="bi bi-person"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-6 col-12">
+    <div class="row">
+        <div class="col-md-4">
+            <label>{{ form.last_name.label }}</label>
+        </div>
+        <div class="col-md-8">
+            <div class="form-group has-icon-left">
+                <div class="position-relative">
+                    <input type="text" id="{{ form.last_name.auto_id }}" name="{{ form.last_name.name }}"
+                        class="form-control" placeholder="{{ form.last_name.label }}" required
+                        value="{% if form.last_name.value is not None %}{{ form.last_name.value }}{% endif %}">
+                    <div class="form-control-icon">
+                        <i class="bi bi-person"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-6 col-12">
+    <div class="row">
+        <div class="col-md-4">
+            <label>{{ form.apmat_user.label }}</label>
+        </div>
+        <div class="col-md-8">
+            <div class="form-group has-icon-left">
+                <div class="position-relative">
+                    <input type="text" id="{{ form.apmat_user.auto_id }}" name="{{ form.apmat_user.name }}"
+                        class="form-control" placeholder="{{ form.apmat_user.label }}"
+                        value="{% if form.apmat_user.value is not None %}{{ form.apmat_user.value }}{% endif %}">
+                    <div class="form-control-icon">
+                        <i class="bi bi-person"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-6 col-12">
+    <div class="row">
+        <div class="col-md-4">
+            <label>{{ form.email.label }}</label>
+        </div>
+        <div class="col-md-8">
+            <div class="form-group has-icon-left">
+                <div class="position-relative">
+                    <input type="text" id="{{ form.email.auto_id }}" name="{{ form.email.name }}" class="form-control"
+                        placeholder="{{ form.email.label }}" required
+                        value="{% if form.email.value is not None %}{{ form.email.value }}{% endif %}">
+                    <div class="form-control-icon">
+                        <i class="bi bi-envelope"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-6 col-12">
+    <div class="row">
+        <div class="col-md-4">
+            <label>{{ form.celular_user.label }}</label>
+        </div>
+        <div class="col-md-8">
+            <div class="form-group has-icon-left">
+                <div class="position-relative">
+                    <input type="number" id="{{ form.celular_user.auto_id }}" name="{{ form.celular_user.name }}"
+                        class="form-control" placeholder="{{ form.celular_user.label }}"
+                        value="{% if form.celular_user.value is not None %}{{ form.celular_user.value }}{% endif %}">
+                    <div class="form-control-icon">
+                        <i class="bi bi-phone"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-6 col-12">
+    <div class="row">
+        <div class="col-md-4">
+            <label>{{ form.run_user.label }}</label>
+        </div>
+        <div class="col-md-5">
+            <div class="form-group has-icon-left">
+                <div class="position-relative">
+                    <input type="text" id="{{ form.run_user.auto_id }}" name="{{ form.run_user.name }}"
+                        class="form-control" placeholder="{{ form.run_user.label }}" required
+                        value="{% if form.run_user.value is not None %}{{ form.run_user.value }}{% endif %}">
+                    <div class="form-control-icon">
+                        <i class="bi bi-person"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group has-icon-left">
+                <div class="position-relative">
+                    <input type="text" id="{{ form.dv_run.auto_id }}" name="{{ form.dv_user.name }}"
+                        class="form-control" placeholder="{{ form.dv_user.label }}" required
+                        value="{% if form.dv_user.value is not None %}{{ form.dv_user.value }}{% endif %}">
+                    <div class="form-control-icon">
+                        <i class="bi bi-person"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-6 col-12">
+    <div class="row">
+        <div class="col-md-4">
+            <label>{{ form.fecha_nac_user.label }}</label>
+        </div>
+        <div class="col-md-8">
+            <div class="form-group has-icon-left">
+                <div class="position-relative">
+                    <input type="date" id="{{ form.fecha_nac_user.auto_id }}" name="{{ form.fecha_nac_user.name }}"
+                        class="form-control" placeholder="{{ form.fecha_nac_user.label }}"
+                        value="{% if form.fecha_nac_user.value is not None %}{{ form.fecha_nac_user.value }}{% endif %}">
+                    <div class="form-control-icon">
+                        <i class="bi bi-calendar-week"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-6 col-12">
+    <div class="row">
+        <div class="col-md-4">
+            <label>{{ form.direccion_user.label }}</label>
+        </div>
+        <div class="col-md-8">
+            <div class="form-group has-icon-left">
+                <div class="position-relative">
+                    <input type="text" id="{{ form.direccion_user.auto_id }}" name="{{ form.direccion_user.name }}"
+                        class="form-control" placeholder="{{ form.direccion_user.label }}"
+                        value="{% if form.direccion_user.value is not None %}{{ form.direccion_user.value }}{% endif %}">
+                    <div class="form-control-icon">
+                        <i class="bi bi-person"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-6 col-12">
+    <div class="row">
+        <div class="col-md-4">
+            <label>{{ form.region.label }}</label>
+        </div>
+        <div class="col-md-8">
+            <div class="form-group has-icon-left">
+                <div class="position-relative">
+                    <fieldset class="form-group">
+                        <select class="form-select" name="{{ form.region.name }}" id="{{ form.region.auto_id }}"
+                            onchange="cambiarProvincia()">
+                            {% for key, valor in form.region.field.choices %}
+                            <option value="{{ key }}"{% if form.fields.region.value == key %}selected{% endif %}>
+                                {{ valor }}</option>
+                            {% endfor %}
+                        </select>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-6 col-12">
+    <div class="row">
+        <div class="col-md-4">
+            <label>{{ form.provincia.label }}</label>
+        </div>
+        <div class="col-md-8">
+            <div class="form-group has-icon-left">
+                <div class="position-relative">
+                    <fieldset class="form-group">
+                        <select class="form-select" name="{{ form.provincia.name }}" id="{{ form.provincia.auto_id }}"
+                            onchange="cambiarComuna()">
+                            {% for key, value in form.comuna_user.field.choices %}
+                            <option value="{{ key }}{% if form.fields.comuna_user.value == key %}selected{% endif %}">
+                                {{ value }}</option>
+                            {% endfor %}
+                        </select>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-6 col-12">
+    <div class="row">
+        <div class="col-md-4">
+            <label>{{ form.comuna_user.label }}</label>
+        </div>
+        <div class="col-md-8">
+            <div class="form-group has-icon-left">
+                <div class="position-relative">
+                    <fieldset class="form-group">
+                        <select class="form-select" name="{{ form.comuna_user.name }}"
+                            id="{{ form.comuna_user.auto_id }}">
+                            {% for key, value in form.comuna_user.field.choices %}
+                            <option value="{{ key }}{% if form.fields.comuna_user.value == key %}selected{% endif %}">
+                                {{ value }}</option>
+                            {% endfor %}
+                        </select>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-6 col-12">
+    <div class="row">
+        <div class="col-md-4">
+            <label>{{ form.username.label }}</label>
+        </div>
+        <div class="col-md-8">
+            <div class="form-group has-icon-left">
+                <div class="position-relative">
+                    <input type="text" id="{{ form.username.auto_id }}" name="{{ form.username.name }}"
+                        class="form-control" placeholder="{{ form.username.label }}" required
+                        value="{% if form.username.value is not None %}{{ form.username.value }}{% endif %}">
+                    <div class="form-control-icon">
+                        <i class="bi bi-person"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-6 col-12">
+    <div class="row">
+        <div class="col-md-4">
+            <label>{{ form.foto_user.label }}</label>
+        </div>
+        <div class="col-md-8">
+            <div class="form-group has-icon-right">
+                <div class="position-relative">
+                    <input type="file" id="{{ form.foto_user.auto_id }}" name="{{ form.foto_user.name }}"
+                        class="form-control" placeholder="{{ form.foto_user.label }}">
+                    <div class="form-control-icon">
+                        <i class="bi bi-image"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock form_body %}
+
+
+{% block form_footer %}
+<div class="card-content">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sm-12 col-md-6 col-lg-3">
+                <div class="form-group">
+                    <div class='form-check'>
+                        <div class="checkbox">
+                            <input type="radio" name="{{ form.is_admin.name }}" id="{{ form.is_admin.name }}"
+                                class="form-check-input" onchange="rd_perfil(this)">
+                            <label for="{{ form.is_admin.name }}">Administrador</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-3">
+                <div class="form-group">
+                    <div class='form-check'>
+                        <div class="checkbox">
+                            <input type="radio" name="{{ form.is_alumno.name }}" id="{{ form.is_alumno.name }}"
+                                class="form-check-input" checked onchange="rd_perfil(this)">
+                            <label for="{{ form.is_alumno.name }}">Alumno</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-3">
+                <div class="form-group">
+                    <div class='form-check'>
+                        <div class="checkbox">
+                            <input type="radio" name="{{ form.is_profesor.name }}" id="{{ form.is_profesor.name }}"
+                                class="form-check-input" onchange="rd_perfil(this)">
+                            <label for="{{ form.is_profesor.name }}">Profesor</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-3">
+                <div class="form-group">
+                    <div class='form-check'>
+                        <div class="checkbox">
+                            <div class="checkbox">
+                                <input type="radio" name="{{ form.is_administrativo.name }}"
+                                    id="{{ form.is_administrativo.name }}" class="form-check-input"
+                                    onchange="rd_perfil(this)">
+                                <label for="{{ form.is_administrativo.name }}">Administrativo</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-3">
+                <div class="form-group">
+                    <div class='form-check'>
+                        <div class="checkbox">
+                            <input type="radio" name="{{ form.is_apoderado.name }}" id="{{ form.is_apoderado.name }}"
+                                class="form-check-input" onchange="rd_perfil(this)">
+                            <label for="{{ form.is_apoderado.name }}">Apoderado</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-3">
+                <div class="form-group">
+                    <div class='form-check'>
+                        <div class="checkbox">
+                            <input type="radio" name="{{ form.is_inspector.name }}" id="{{ form.is_inspector.name }}"
+                                class="form-check-input" onchange="rd_perfil(this)">
+                            <label for="{{ form.is_inspector.name }}">Inspector</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-3">
+                <div class="form-group">
+                    <div class='form-check'>
+                        <div class="checkbox">
+                            <input type="radio" name="{{ form.is_auditor.name }}" id="{{ form.is_auditor.name }}"
+                                class="form-check-input" onchange="rd_perfil(this)">
+                            <label for="{{ form.is_auditor.name }}">Auditor</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock form_footer %}
+
+
+{% block form_footer_hidden %}
+<div id="div-apoderado">
+    <hr>
+    <div class="row">
+        <div class="col-md-6 col-12">
+            <div class="row">
+                <div class="col-md-4">
+                    <label>Alumno</label>
+                </div>
+                <div class="col-md-8">
+                    <div class="form-group has-icon-left">
+                        <div class="position-relative">
+                            <fieldset class="form-group">
+                                <select class="form-select" name="{{ form.alumno.name }}"
+                                    id="{{ form.alumno.auto_id }}">
+                                    {% for key, value in form.alumno.field.choices %}
+                                    <option
+                                        value="{{ key }}{% if form.fields.alumno.value == key %}selected{% endif %}">
+                                        {{ value }}</option>
+                                    {% endfor %}
+                                </select>
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-3">
+            <div class="form-group">
+                <div class='form-check'>
+                    <div class="checkbox">
+                        <input type="checkbox" name="{{ form.is_sostenedor.name }}"
+                            id="{{ form.is_sostenedor.auto_id }}" class="form-check-input">
+                        <label for="{{ form.is_sostenedor.auto_id }}">Es sostenedor</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock form_footer_hidden %}
+
+
+{% block form_buttons %}
+<div class="row">
+    <div class="col-12 d-flex justify-content-end">
+        <button type="submit" class="btn btn-outline-primary me-1 mb-1">
+            <i class="bi bi-sd-card-fill"></i> Guardar
+        </button>
+        <button id="btn-limpiar-form" type="reset" class="btn btn-outline-secondary me-1 mb-1">
+            <i class="bi bi-brush-fill"></i> Limpiar
+        </button>
+    </div>
+</div>
+{% endblock form_buttons %}
+    
