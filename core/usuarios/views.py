@@ -301,7 +301,7 @@ class RolesUpdateView(LoginRequiredMixin, PermissionRequiredMixin, View):
 
             # Se recupera el usuario que se está modificando
             formulario = forms.PerfilesModelForm(request.POST)
-            usuario = self.model.objects.filter(pk=formulario.cleaned_data['user']).first()
+            usuario = self.model.objects.filter(pk=request.POST['user']).first()
             perfil_defecto = usuario.perfil_base_user
 
             # Obtener lista de perfiles antiguos

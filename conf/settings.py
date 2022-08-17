@@ -49,16 +49,16 @@ INSTALLED_APPS = [
     'rest_framework',
     'debug_toolbar',
     
-    'core.agenda',
-    'core.dash',
-    'core.usuarios',
-    'core.asistencia',
-    'core.cursos',
-    'core.asignaturas',
-    'core.calendario',
-    'core.libro_clases',
-    'core.public',
-    'core.mensualidades',
+    'core.agenda', # permite la comunicación entre apoderados y profesores, inspectores o administrativos
+    'core.dash', # app base privada
+    'core.usuarios', # app para el control de los usuarios, roles y permisos
+    'core.asistencia', # app para el control de la asistencia de los usuarios
+    'core.cursos', # app para la creación de cursos y asignación de alumnos a cada curso
+    'core.asignaturas', # app para la creación de asignaturas y asignación de estas a cada curso
+    'core.calendario', # app para ver el horario de clases del alumno
+    'core.libro_clases', # app para la digitalización del libro de clases
+    'core.public', # app base pública
+    'core.mensualidades', # app para el control de las mensualidades
 ]
 
 MIDDLEWARE = [
