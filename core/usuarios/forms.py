@@ -96,25 +96,24 @@ class UserCreateModelForm(forms.ModelForm):
             }
         }
         
-        def clean(self):
-            """ Esta función se sobrescribe con el fin de realizar la validación de run 
-                ingresado por el usuario
+    def clean(self):
+        """ Esta función se sobrescribe con el fin de realizar la validación de run 
+            ingresado por el usuario
 
-            Raises:
-                forms.ValidationError: _Levanta una excepción si el dv ingresado no corresponde al run_
+        Raises:
+            forms.ValidationError: _Levanta una excepción si el dv ingresado no corresponde al run_
 
-            Returns:
-                _dict_: _Diccionario con información del formulario validada_
-            """
-            cleaned_data = super().clean()
-            run_user = cleaned_data['run_user']
-            valor = 11 - sum([int(a) * int(b) for a, b in zip(str(run_user).zfill(8), '32765432')]) % 11
-            dv_correcto = { 10: 'K', 11: '0'}.get(valor, str(valor))
-            dv_ingresado = (cleaned_data['dv_user']).upper()
-            
-            if dv_correcto != dv_ingresado:
-                raise forms.ValidationError('El Run ingresado no es correcto, verifique la información')
-            return cleaned_data
+        Returns:
+            _dict_: _Diccionario con información del formulario validada_
+        """
+        cleaned_data = super().clean()
+        run_user = cleaned_data['run_user']
+        valor = 11 - sum([int(a) * int(b) for a, b in zip(str(run_user).zfill(8), '32765432')]) % 11
+        dv_correcto = { 10: 'K', 11: '0'}.get(valor, str(valor))
+        dv_ingresado = (cleaned_data['dv_user']).upper()
+        if dv_correcto != dv_ingresado:
+            raise forms.ValidationError('El Run ingresado no es correcto, verifique la información')
+        return cleaned_data
         
 
 class UserUpdateModelForm(forms.ModelForm):

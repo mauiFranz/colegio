@@ -1,0 +1,25 @@
+# CREAR UN USUARIO ADMINISTRADOR 
+> python manage.py createsuperuser
+
+# EN EL SHELL CREAR PERFIL PARA USUARIO
+> python manage.py shell
+
+	> from core.usuarios.models import User, UserAdmin
+	> fran = User.objects.filter(run_user=16234189).first()
+	> fran.first_name='Francisco'
+	> fran.last_name='Olivares'
+	> fran.save()
+	> admin = UserAdmin()
+	> admin.user_useradmin = fran
+	> admin.active_useradmin = True
+	> admin.save()
+
+# EN AMBIENTE WEB REGISTRAR LOS GRUPOS 
+- gpo_administrador (acceso a todos los permissions de las aplicaciones creadas)
+- gpo_administrativo (acceso a todos los permissions de las aplicaciones creadas)
+- gpo_alumno (acceso a todos los permissions de las aplicaciones creadas)
+- gpo_apoderado (acceso a todos los permissions de las aplicaciones creadas)
+- gpo_auditor (acceso a todos los permissions de las aplicaciones creadas)
+- gpo_inspector (acceso a todos los permissions de las aplicaciones creadas)
+- gpo_profesor (acceso a todos los permissions de las aplicaciones creadas)
+
